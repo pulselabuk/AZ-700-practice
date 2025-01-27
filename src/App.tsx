@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GraduationCap } from 'lucide-react';
 import { QuestionCard } from './components/QuestionCard';
 import { ProgressBar } from './components/ProgressBar';
 import { questions, categories } from './data/questions';
-import { Question } from './types';
+import { Question, QuestionType } from './types';
 
 function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -90,12 +90,13 @@ function App() {
             <div className="flex justify-between mt-4">
               <button
                 className={`px-4 py-2 rounded ${
-                  !selectedAnswer
+                  !selectedAnswer ||
+                  (currentQuestion.type === QuestionType.OrderSteps && selectedAnswer.length === 0)
                     ? 'bg-gray-300 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
                 onClick={handleAnswerSubmit}
-                disabled={!selectedAnswer || showExplanation}
+                disabled={!selectedAnswer || (currentQuestion.type === QuestionType.OrderSteps && selectedAnswer.length === 0) || showExplanation}
               >
                 Submit Answer
               </button>
