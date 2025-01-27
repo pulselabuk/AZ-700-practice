@@ -16,16 +16,57 @@ function App() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  const [answers, setAnswers] = useState<(string[] | null)[]>(questions.map(() => null)); // To track user answers
+  const [attempted, setAttempted] = useState<boolean[]>(questions.map(() => false)); // To track attempted questions
+
   const handleAnswerSubmit = () => {
     if (!selectedAnswer) return;
 
-    const isCorrect = 'correctAnswer' in currentQuestion
-      ? parseInt(selectedAnswer[0]) === currentQuestion.correctAnswer
-      : JSON.stringify(selectedAnswer.map(Number)) === JSON.stringify(currentQuestion.correctOrder);
+    const isCorrect =
+      'correctAnswer' in currentQuestion
+        ? parseInt(selectedAnswer[0]) === currentQuestion.correctAnswer
+        : JSON.stringify(selectedAnswer.map(Number)) === JSON.stringify(
+            currentQuestion.correctOrder
+          );
+
+    // Save the answer and mark the question as attempted
+    setAnswers((prev) => {
+      const updated = [...prev];
+      updated[currentQuestionIndex] = selectedAnswer;
+      return updated;
+    });
+    setAttempted((prev) => {
+      const updated = [...prev];
+      updated[currentQuestionIndex] = true;
+      return updated;
+    });
 
     setScore((prev) => prev + (isCorrect ? 1 : 0));
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     setShowExplanation(true);
+  };
+
+  const handleRetryQuestion = () => {
+    setSelectedAnswer(null); // Clear the selected answer
+    setShowExplanation(false); // Hide the explanation
+    setFeedback(null); // Reset feedback
+  };
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      const previousIndex = currentQuestionIndex - 1;
+
+      setCurrentQuestionIndex(previousIndex);
+
+      // Restore the previous answer and attempted state
+      setSelectedAnswer(answers[previousIndex] || null);
+      setShowExplanation(attempted[previousIndex]); // Show explanation only if the question was attempted
+
+      // Reset feedback for the previous question
+      setFeedback(
+        attempted[previousIndex] ? (answers[previousIndex] ? 'correct' : 'incorrect') : null
+      );
+    }
   };
 
   const handleNextQuestion = () => {
@@ -63,12 +104,20 @@ function App() {
               feedback={<FeedbackIndicator feedback={feedback} />}
               onSubmit={handleAnswerSubmit}
               onNext={handleNextQuestion}
+              onPrevious={handlePreviousQuestion}
+              onRetry={handleRetryQuestion}
               categories={categories}
               currentCategory={currentQuestion.category}
+              isLastQuestion={currentQuestionIndex === questions.length - 1}
+              isFirstQuestion={currentQuestionIndex === 0}
             />
           </>
         ) : (
-          <CompletionScreen score={score} totalQuestions={questions.length} onRestart={handleRestartQuiz} />
+          <CompletionScreen
+            score={score}
+            totalQuestions={questions.length}
+            onRestart={handleRestartQuiz}
+          />
         )}
       </main>
     </div>
