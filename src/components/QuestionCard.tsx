@@ -15,39 +15,30 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   onAnswerSelect,
   showExplanation,
 }) => {
-  // State to track the current order of options
   const [options, setOptions] = useState<string[]>(question.options);
 
-  // Sync the options state when the question changes (in case the props change)
   useEffect(() => {
     setOptions(question.options);
   }, [question.options]);
 
-  // Handle multiple choice selection
   const handleMultipleChoiceSelect = (index: number) => {
-    onAnswerSelect([question.options[index]]);
+    onAnswerSelect([index.toString()]);
   };
 
-  // Handle drag-and-drop reorder
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
 
-    // Reorder the options array
     const reorderedOptions = Array.from(options);
     const [movedOption] = reorderedOptions.splice(result.source.index, 1);
     reorderedOptions.splice(result.destination.index, 0, movedOption);
 
-    // Update the options state and selected answer state
     setOptions(reorderedOptions);
 
-    // Update selected answers based on new order
-    const newSelectedAnswer = selectedAnswer?.map(answer => {
-      // Find and map the selected answer to its new position in the options list
-      return reorderedOptions.find(option => option === answer);
-    }) || [];
+    const reorderedIndices = reorderedOptions.map((option) =>
+      question.options.indexOf(option)
+    );
 
-    // Update selected answer in parent component
-    onAnswerSelect(newSelectedAnswer);
+    onAnswerSelect(reorderedIndices.map((index) => index.toString()));
   };
 
   return (
@@ -91,7 +82,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             <button
               key={index}
               className={`w-full text-left p-3 rounded ${
-                selectedAnswer?.includes(option)
+                selectedAnswer?.includes(index.toString())
                   ? 'bg-blue-100 border-blue-300'
                   : 'bg-gray-50 hover:bg-gray-100'
               } border transition-colors`}

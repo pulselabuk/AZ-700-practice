@@ -19,15 +19,22 @@ function App() {
     if (!selectedAnswer) return;
 
     let isCorrect = false;
+
     if ('correctAnswer' in currentQuestion) {
-      isCorrect = selectedAnswer[0] === currentQuestion.correctAnswer;
+      // For Multiple-Choice Questions
+      isCorrect =
+        selectedAnswer.length === 1 &&
+        parseInt(selectedAnswer[0]) === currentQuestion.correctAnswer;
     } else if ('correctOrder' in currentQuestion) {
-      isCorrect = JSON.stringify(selectedAnswer) === JSON.stringify(currentQuestion.correctOrder);
+      // For Ordered-Step Questions
+      const selectedIndexes = selectedAnswer.map((answer) => parseInt(answer));
+      isCorrect = JSON.stringify(selectedIndexes) === JSON.stringify(currentQuestion.correctOrder);
     }
 
     if (isCorrect) {
       setScore(score + 1);
     }
+
     setShowExplanation(true);
   };
 
@@ -35,7 +42,7 @@ function App() {
     if (currentQuestionIndex === questions.length - 1) {
       setIsCompleted(true);
     } else {
-      setCurrentQuestionIndex(prev => prev + 1);
+      setCurrentQuestionIndex((prev) => prev + 1);
       setSelectedAnswer(null);
       setShowExplanation(false);
     }
@@ -95,7 +102,7 @@ function App() {
                 <div className="bg-white rounded-lg shadow-lg p-4">
                   <h2 className="text-lg font-semibold mb-4">Categories</h2>
                   <div className="space-y-2">
-                    {categories.map(category => (
+                    {categories.map((category) => (
                       <button
                         key={category}
                         className={`w-full text-left px-3 py-2 rounded ${
