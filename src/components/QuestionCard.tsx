@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Question, QuestionType } from '../types';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
@@ -15,8 +15,6 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   onAnswerSelect,
   showExplanation,
 }) => {
-  const [orderedItems, setOrderedItems] = useState(question.options);
-
   const handleMultipleChoiceSelect = (index: number) => {
     onAnswerSelect([index]);
   };
@@ -24,11 +22,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
     
-    const items = Array.from(orderedItems);
+    const items = Array.from(question.options);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
-    setOrderedItems(items);
     const newOrder = items.map(item => question.options.indexOf(item));
     onAnswerSelect(newOrder);
   };
@@ -48,28 +45,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="options">
             {(provided) => (
-              <div 
-                {...provided.droppableProps} 
-                ref={provided.innerRef}
-                className="space-y-2"
-              >
-                {orderedItems.map((option, index) => (
-                  <Draggable key={option} draggableId={option} index={index}>
-                    {(provided, snapshot) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {question.options.map((option, index) => (
+                  <Draggable key={index} draggableId={index.toString()} index={index}>
+                    {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`p-4 rounded border ${
-                          snapshot.isDragging
-                            ? 'bg-blue-50 border-blue-200 shadow-lg'
-                            : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                        } cursor-move transition-colors duration-200`}
+                        className="p-3 mb-2 bg-gray-50 rounded border cursor-move hover:bg-gray-100"
                       >
-                        <div className="flex items-center">
-                          <span className="mr-3 text-gray-500">{index + 1}.</span>
-                          {option}
-                        </div>
+                        {option}
                       </div>
                     )}
                   </Draggable>
