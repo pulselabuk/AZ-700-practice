@@ -90,8 +90,7 @@ function App() {
             <div className="flex justify-between mt-4">
               <button
                 className={`px-4 py-2 rounded ${
-                  !selectedAnswer ||
-                  (currentQuestion.type === QuestionType.OrderSteps && selectedAnswer.length === 0)
+                  !selectedAnswer || (currentQuestion.type === QuestionType.OrderSteps && selectedAnswer.length === 0)
                     ? 'bg-gray-300 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
