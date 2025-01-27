@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GraduationCap, Trophy } from 'lucide-react';
 import { QuestionCard } from './components/QuestionCard';
 import { ProgressBar } from './components/ProgressBar';
@@ -7,7 +7,7 @@ import { Question } from './types';
 
 function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number[] | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<string[] | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

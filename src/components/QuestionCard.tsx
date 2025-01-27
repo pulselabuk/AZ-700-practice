@@ -4,8 +4,8 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 interface QuestionCardProps {
   question: Question;
-  selectedAnswer: number[] | null;
-  onAnswerSelect: (answer: number[]) => void;
+  selectedAnswer: string[] | null;
+  onAnswerSelect: (answer: string[]) => void;
   showExplanation: boolean;
 }
 
@@ -16,26 +16,25 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   showExplanation,
 }) => {
   const handleMultipleChoiceSelect = (index: number) => {
-    onAnswerSelect([index]); // for non-drag-and-drop questions
+    onAnswerSelect([question.options[index]]);
   };
 
   const handleDragEnd = (result: any) => {
-    if (!result.destination) return; // If no destination, do nothing
+    if (!result.destination) return;
 
-    const items = Array.from(question.options); // Copy of the current options
-    const [reorderedItem] = items.splice(result.source.index, 1); // Remove item from source
-    items.splice(result.destination.index, 0, reorderedItem); // Insert it at the destination
+    // Reorder the options
+    const items = Array.from(question.options);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-    // Update the selectedAnswer to reflect the new order of the options
-    const newSelectedAnswer = selectedAnswer?.map((index) => {
-      // Get the option that was selected
-      const selectedOption = question.options[index];
-      // Find the new index of that selected option in the reordered items
-      return items.indexOf(selectedOption);
-    });
+    // Update selected answer to match the new order
+    const newSelectedAnswer = selectedAnswer?.map(answer => {
+      // Find the selected option and map it to the new order
+      return items.find(option => option === answer);
+    }) || [];
 
-    // Pass the new selected answer order back to the parent
-    onAnswerSelect(newSelectedAnswer || []);
+    // Update the answers with the new order
+    onAnswerSelect(newSelectedAnswer);
   };
 
   return (
@@ -79,7 +78,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             <button
               key={index}
               className={`w-full text-left p-3 rounded ${
-                selectedAnswer?.includes(index)
+                selectedAnswer?.includes(option)
                   ? 'bg-blue-100 border-blue-300'
                   : 'bg-gray-50 hover:bg-gray-100'
               } border transition-colors`}
