@@ -83,6 +83,7 @@ function App() {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Score: {score}/{currentQuestionIndex + (showExplanation ? 1 : 0)}</p>
+              <p className="text-sm text-gray-600">Question: {currentQuestionIndex + 1}</p> {/* Add this line */}
             </div>
           </div>
         </div>
