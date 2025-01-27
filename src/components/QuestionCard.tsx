@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Question, QuestionType } from '../types';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
@@ -15,25 +15,38 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   onAnswerSelect,
   showExplanation,
 }) => {
+  // State to track the current order of options
+  const [options, setOptions] = useState<string[]>(question.options);
+
+  // Sync the options state when the question changes (in case the props change)
+  useEffect(() => {
+    setOptions(question.options);
+  }, [question.options]);
+
+  // Handle multiple choice selection
   const handleMultipleChoiceSelect = (index: number) => {
     onAnswerSelect([question.options[index]]);
   };
 
+  // Handle drag-and-drop reorder
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
 
-    // Reorder the options
-    const items = Array.from(question.options);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    // Reorder the options array
+    const reorderedOptions = Array.from(options);
+    const [movedOption] = reorderedOptions.splice(result.source.index, 1);
+    reorderedOptions.splice(result.destination.index, 0, movedOption);
 
-    // Update selected answer to match the new order
+    // Update the options state and selected answer state
+    setOptions(reorderedOptions);
+
+    // Update selected answers based on new order
     const newSelectedAnswer = selectedAnswer?.map(answer => {
-      // Find the selected option and map it to the new order
-      return items.find(option => option === answer);
+      // Find and map the selected answer to its new position in the options list
+      return reorderedOptions.find(option => option === answer);
     }) || [];
 
-    // Update the answers with the new order
+    // Update selected answer in parent component
     onAnswerSelect(newSelectedAnswer);
   };
 
@@ -53,7 +66,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           <Droppable droppableId="options">
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                {question.options.map((option, index) => (
+                {options.map((option, index) => (
                   <Draggable key={index} draggableId={index.toString()} index={index}>
                     {(provided) => (
                       <div
