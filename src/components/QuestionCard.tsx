@@ -21,13 +21,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
-
+    
     const items = Array.from(question.options);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
+    
     const newOrder = items.map(item => question.options.indexOf(item));
-    onAnswerSelect(newOrder); // Update the selectedAnswer with the new order
+    onAnswerSelect(newOrder);
   };
 
   return (
