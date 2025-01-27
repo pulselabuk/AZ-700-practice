@@ -21,13 +21,26 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
-    
+
+    // Copy the options array to avoid mutating the original one
     const items = Array.from(question.options);
+
+    // Reorder the items based on the drag result
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    
-    const newOrder = items.map(item => question.options.indexOf(item));
-    onAnswerSelect(newOrder);
+
+    // We need to find the new order of selected answers based on the new options order
+    const newOrder = selectedAnswer?.map((answerIndex) => {
+      // Get the original option that was selected
+      const selectedOption = question.options[answerIndex];
+      // Get the new index of that selected option in the reordered list
+      return items.indexOf(selectedOption);
+    });
+
+    // Update the selected answers with the new order
+    if (newOrder) {
+      onAnswerSelect(newOrder);
+    }
   };
 
   return (
