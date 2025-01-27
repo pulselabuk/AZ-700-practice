@@ -21,23 +21,26 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
-
-    const reorderedOptions = Array.from(question.options);
-    const [reorderedItem] = reorderedOptions.splice(result.source.index, 1);
-    reorderedOptions.splice(result.destination.index, 0, reorderedItem);
-
-    // Get the new order of selected answer based on the reordered options
+  
+    const items = Array.from(question.options);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+  
+    // Create a new selectedAnswer array based on the reordered items
     const newSelectedAnswer = selectedAnswer?.map(index => {
       const selectedOption = question.options[index];
-      return reorderedOptions.indexOf(selectedOption);
+      return items.indexOf(selectedOption); // Get the new index of the selected option
     });
-
-    // Only update if the order of the selected answer has changed
+  
+    // Update the answer only if the new order differs from the old
     if (newSelectedAnswer && JSON.stringify(newSelectedAnswer) !== JSON.stringify(selectedAnswer)) {
       onAnswerSelect(newSelectedAnswer);
     }
+  
+    // Update the options to the new order
+    question.options = items;
   };
-
+    
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
       {question.type === QuestionType.CaseStudy && (
@@ -78,11 +81,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           {question.options.map((option, index) => (
             <button
               key={index}
-              className={`w-full text-left p-3 rounded ${
+              className={w-full text-left p-3 rounded ${
                 selectedAnswer?.includes(index)
                   ? 'bg-blue-100 border-blue-300'
                   : 'bg-gray-50 hover:bg-gray-100'
-              } border transition-colors`}
+              } border transition-colors}
               onClick={() => handleMultipleChoiceSelect(index)}
             >
               {option}
