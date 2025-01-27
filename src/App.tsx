@@ -3,7 +3,7 @@ import { GraduationCap, Trophy } from 'lucide-react';
 import { QuestionCard } from './components/QuestionCard';
 import { ProgressBar } from './components/ProgressBar';
 import { questions, categories } from './data/questions';
-import { Question } from './types';
+// import { Question } from './types';
 
 function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -81,8 +81,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <GraduationCap className="h-8 w-8 text-blue-600 mr-2" />
-              <h1 className="text-2xl font-bold text-gray-900">AZ-700 Practice Exam</h1>
-            </div>
+              <a href="/" className="text-2xl font-bold text-gray-900">AZ-700 Practice Exam</a>            </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Score: {score}/{currentQuestionIndex + (showExplanation ? 1 : 0)}</p>
             </div>

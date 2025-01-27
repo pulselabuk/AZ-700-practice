@@ -10,6 +10,7 @@ export interface BaseQuestion {
   question: string;
   options: string[];
   explanation: string;
+  category: string;
 }
 
 export interface MultipleChoiceQuestion extends BaseQuestion {
