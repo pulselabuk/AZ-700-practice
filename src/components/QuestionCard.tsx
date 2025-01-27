@@ -51,6 +51,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       )}
 
       <h2 className="text-xl font-semibold mb-4">{question.question}</h2>
+      {/* <p className="text-sm text-blue-500 mb-4">Category: {question.category}</p>  */}
 
       {question.type === QuestionType.OrderSteps ? (
         <DragDropContext onDragEnd={handleDragEnd}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { GraduationCap, Trophy } from 'lucide-react';
 import { QuestionCard } from './components/QuestionCard';
 import { ProgressBar } from './components/ProgressBar';
@@ -10,7 +10,6 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState<string[] | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [score, setScore] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -54,7 +53,6 @@ function App() {
     setShowExplanation(false);
     setScore(0);
     setIsCompleted(false);
-    setSelectedCategory(null);
   };
 
   const CompletionScreen = () => (
@@ -81,7 +79,8 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <GraduationCap className="h-8 w-8 text-blue-600 mr-2" />
-              <a href="/" className="text-2xl font-bold text-gray-900">AZ-700 Practice Exam</a>            </div>
+              <a href="/" className="text-2xl font-bold text-gray-900">AZ-700 Practice Exam</a>
+            </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Score: {score}/{currentQuestionIndex + (showExplanation ? 1 : 0)}</p>
             </div>
@@ -102,17 +101,16 @@ function App() {
                   <h2 className="text-lg font-semibold mb-4">Categories</h2>
                   <div className="space-y-2">
                     {categories.map((category) => (
-                      <button
+                      <div
                         key={category}
                         className={`w-full text-left px-3 py-2 rounded ${
-                          selectedCategory === category
+                          currentQuestion.category === category
                             ? 'bg-blue-100 text-blue-700'
-                            : 'hover:bg-gray-100'
+                            : 'bg-gray-50'
                         }`}
-                        onClick={() => setSelectedCategory(category)}
                       >
                         {category}
-                      </button>
+                      </div>
                     ))}
                   </div>
                 </div>
