@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GraduationCap, Trophy } from 'lucide-react';
 import { QuestionCard } from './components/QuestionCard';
 import { ProgressBar } from './components/ProgressBar';
@@ -36,7 +36,7 @@ function App() {
       setIsCompleted(true);
     } else {
       setCurrentQuestionIndex(prev => prev + 1);
-      setSelectedAnswer(null);
+      // Do not reset selectedAnswer here to preserve the order
       setShowExplanation(false);
     }
   };
