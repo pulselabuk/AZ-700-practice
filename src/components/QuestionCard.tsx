@@ -21,26 +21,26 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
-  
+
+    // Copy the options array so we do not mutate the original one
     const items = Array.from(question.options);
+
+    // Reorder the items based on the drag result
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-  
-    // Create a new selectedAnswer array based on the reordered items
+
+    // Create a new selectedAnswer array based on the new order of items
     const newSelectedAnswer = selectedAnswer?.map(index => {
       const selectedOption = question.options[index];
-      return items.indexOf(selectedOption); // Get the new index of the selected option
+      return items.indexOf(selectedOption);
     });
-  
-    // Update the answer only if the new order differs from the old
+
+    // Update the selectedAnswer if the order has changed
     if (newSelectedAnswer && JSON.stringify(newSelectedAnswer) !== JSON.stringify(selectedAnswer)) {
       onAnswerSelect(newSelectedAnswer);
     }
-  
-    // Update the options to the new order
-    question.options = items;
   };
-    
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
       {question.type === QuestionType.CaseStudy && (
@@ -81,11 +81,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           {question.options.map((option, index) => (
             <button
               key={index}
-              className={w-full text-left p-3 rounded ${
+              className={`w-full text-left p-3 rounded ${
                 selectedAnswer?.includes(index)
                   ? 'bg-blue-100 border-blue-300'
                   : 'bg-gray-50 hover:bg-gray-100'
-              } border transition-colors}
+              } border transition-colors`}
               onClick={() => handleMultipleChoiceSelect(index)}
             >
               {option}
