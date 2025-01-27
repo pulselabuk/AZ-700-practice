@@ -22,20 +22,25 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
   
-    // Reorder the options based on drag-and-drop
     const items = Array.from(question.options);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
   
-    // Update the selected answer by mapping the old answer to the new order
-    const newOrder = items.map(item => question.options.indexOf(item));
-    
-    // Only update selectedAnswer if there was a change
-    if (JSON.stringify(selectedAnswer) !== JSON.stringify(newOrder)) {
-      onAnswerSelect(newOrder);
-    }
-  };
+    // Create a new selectedAnswer array based on the reordered items
+    const newSelectedAnswer = selectedAnswer?.map(index => {
+      const selectedOption = question.options[index];
+      return items.indexOf(selectedOption); // Get the new index of the selected option
+    });
   
+    // Update the answer only if the new order differs from the old
+    if (newSelectedAnswer && JSON.stringify(newSelectedAnswer) !== JSON.stringify(selectedAnswer)) {
+      onAnswerSelect(newSelectedAnswer);
+    }
+  
+    // Update the options to the new order
+    question.options = items;
+  };
+    
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
       {question.type === QuestionType.CaseStudy && (
