@@ -20,13 +20,21 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   };
 
   const handleDragEnd = (result: any) => {
+    // If the item was dropped outside the droppable area, return early
     if (!result.destination) return;
-    
+
+    // Create a new array of options
     const items = Array.from(question.options);
+
+    // Remove the item from the source and insert it at the destination index
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    
+
+    // Now we need to update the state with the new order of items.
+    // The order of the options should be mapped based on their new positions.
     const newOrder = items.map(item => question.options.indexOf(item));
+
+    // Call the callback function with the new order of answers.
     onAnswerSelect(newOrder);
   };
 
