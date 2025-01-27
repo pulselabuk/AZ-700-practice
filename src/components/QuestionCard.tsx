@@ -16,17 +16,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   showExplanation,
 }) => {
   const handleMultipleChoiceSelect = (index: number) => {
-    onAnswerSelect([index]);
+    onAnswerSelect([index]); // for non-drag-and-drop questions
   };
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return; // If no destination, do nothing
-    
+
     const items = Array.from(question.options); // Copy of the current options
     const [reorderedItem] = items.splice(result.source.index, 1); // Remove item from source
     items.splice(result.destination.index, 0, reorderedItem); // Insert it at the destination
 
-    // Now update the selectedAnswer to reflect the new order of the options
+    // Update the selectedAnswer to reflect the new order of the options
     const newSelectedAnswer = selectedAnswer?.map((index) => {
       // Get the option that was selected
       const selectedOption = question.options[index];
