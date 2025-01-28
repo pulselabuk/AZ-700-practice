@@ -5,7 +5,7 @@ export const Footer = () => (
     <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
       {/* Branding */}
       <p className="text-sm">
-        © {new Date().getFullYear()} AZ-700 Practice Exam. All rights reserved.
+        © {new Date().getFullYear()} AZ-700 Practice Exam. <br/> All rights reserved.
       </p>
 
       {/* Links */}
