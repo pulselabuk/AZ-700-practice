@@ -5,6 +5,7 @@ import { CompletionScreen } from './components/CompletionScreen';
 import { QuestionLayout } from './components/QuestionLayout';
 import { FeedbackIndicator } from './components/FeedbackIndicator';
 import { questions, categories } from './data/questions';
+import { Footer } from './components/Footer';
 
 function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -89,11 +90,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <Header score={score} questionIndex={currentQuestionIndex + 1} />
 
-      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        {!isCompleted ? (
+      <main className="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      {!isCompleted ? (
           <>
             <ProgressBar current={currentQuestionIndex + 1} total={questions.length} />
             <QuestionLayout
@@ -120,6 +121,7 @@ function App() {
           />
         )}
       </main>
+      <Footer />
     </div>
   );
 }
