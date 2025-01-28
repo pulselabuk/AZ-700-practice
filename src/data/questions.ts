@@ -77,7 +77,7 @@ export const questions: Question[] = [
       "Configure the local network gateway"
     ],
     correctOrder: [3, 0, 1, 2, 5, 4], // Correct order to follow
-    explanation: "Setting up Azure Front Door involves creating a profile, configuring backend pools, defining routing rules, adding custom domains, and enabling WAF policies for security.",
+    explanation: "To configure an Azure Virtual Network Gateway for a site-to-site VPN connection, first create the Virtual Network, then add a gateway subnet. After that, create a Public IP address for the gateway, followed by creating the Virtual Network Gateway. Next, configure the local network gateway (on-premises device) and finally create the VPN connection between the two gateways.",
     category: "VPN Solutions"
   },
   {
