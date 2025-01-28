@@ -79,7 +79,7 @@ export const QuestionLayout = ({
         {showExplanation && (
           <button
             onClick={onRetry}
-            className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded"
           >
             Retry
           </button>

@@ -69,13 +69,13 @@ export const questions: Question[] = [
     type: QuestionType.OrderSteps,
     question: "Arrange the steps to set up Azure Front Door for global load balancing:",
     options: [
-      "Create a Front Door profile",
-      "Configure backend pools",
-      "Define routing rules",
-      "Add custom domains",
-      "Enable WAF policies"
+      "Define routing rules", // 0
+      "Add custom domains",  // 2
+      "Enable WAF policies", // 1
+      "Configure backend pools", // 3
+      "Create a Front Door profile" // 4
     ],
-    correctOrder: [3, 0, 1, 4, 2], // Updated order
+    correctOrder: [4, 2, 3, 0, 1], // Correct order to follow
     explanation: "Setting up Azure Front Door involves creating a profile, configuring backend pools, defining routing rules, adding custom domains, and enabling WAF policies for security.",
     category: "Load Balancing"
   },
