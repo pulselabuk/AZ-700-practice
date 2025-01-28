@@ -67,15 +67,16 @@ export const questions: Question[] = [
   {
     id: 5,
     type: QuestionType.OrderSteps,
-    question: "Arrange the steps to set up Azure Front Door for global load balancing:",
+    question: "Arrange the steps in the correct order to configure an Azure Virtual Network Gateway for a site-to-site VPN connection:",
     options: [
-      "Define routing rules", // 0
-      "Add custom domains",  // 2
-      "Enable WAF policies", // 1
-      "Configure backend pools", // 3
-      "Create a Front Door profile" // 4
+      "Add a gateway subnet",
+      "Create a Public IP address for the gateway", 
+      "Create the Virtual Network Gateway",
+      "Create a Virtual Network",
+      "Create the VPN connection",
+      "Configure the local network gateway"
     ],
-    correctOrder: [4, 2, 3, 0, 1], // Correct order to follow
+    correctOrder: [3, 0, 1, 2, 5, 4], // Correct order to follow
     explanation: "Setting up Azure Front Door involves creating a profile, configuring backend pools, defining routing rules, adding custom domains, and enabling WAF policies for security.",
     category: "Load Balancing"
   },
@@ -98,11 +99,11 @@ export const questions: Question[] = [
     type: QuestionType.OrderSteps,
     question: "Sequence the steps to configure a Point-to-Site VPN connection using Azure VPN Gateway:",
     options: [
-      "Create a virtual network and gateway subnet",
       "Create the VPN gateway",
-      "Configure the VPN client address pool",
+      "Create a virtual network and gateway subnet",
       "Generate client configuration files",
-      "Install client configuration on devices"
+      "Install client configuration on devices",
+      "Configure the VPN client address pool"
     ],
     correctOrder: [1, 0, 4, 2, 3], // Updated order
     explanation: "Configuring a Point-to-Site VPN involves setting up a virtual network and gateway subnet, creating the VPN gateway, configuring the client address pool, generating client configuration files, and installing them on client devices.",
@@ -127,11 +128,11 @@ export const questions: Question[] = [
     type: QuestionType.OrderSteps,
     question: "Order the steps to configure Azure Application Gateway with a Web Application Firewall (WAF):",
     options: [
-      "Create an application gateway",
-      "Configure the frontend IP",
-      "Set up backend pools",
       "Define routing rules",
-      "Enable WAF and set security policies"
+      "Set up backend pools",
+      "Create an application gateway",
+      "Enable WAF and set security policies",
+      "Configure the frontend IP"
     ],
     correctOrder: [2, 4, 1, 0, 3], // Updated order
     explanation: "Configuring Azure Application Gateway with WAF involves creating the gateway, configuring the frontend IP, setting up backend pools, defining routing rules, and enabling WAF with appropriate security policies.",
