@@ -78,7 +78,7 @@ export const questions: Question[] = [
     ],
     correctOrder: [3, 0, 1, 2, 5, 4], // Correct order to follow
     explanation: "Setting up Azure Front Door involves creating a profile, configuring backend pools, defining routing rules, adding custom domains, and enabling WAF policies for security.",
-    category: "Load Balancing"
+    category: "VPN Solutions"
   },
   {
     id: 6,
