@@ -57,6 +57,18 @@ function App() {
     if (currentQuestionIndex > 0) {
       const previousIndex = currentQuestionIndex - 1;
 
+      // Check if the previous question was answered correctly
+      const wasCorrect = answers[previousIndex] 
+        ? 'correctAnswer' in questions[previousIndex] 
+          ? parseInt(answers[previousIndex][0]) === questions[previousIndex].correctAnswer 
+          : JSON.stringify(answers[previousIndex].map(Number)) === JSON.stringify(questions[previousIndex].correctOrder)
+        : false;
+
+      // Deduct 1 from the score if the previous answer was correct
+      if (wasCorrect) {
+        setScore(prev => prev - 1);
+      }
+
       setCurrentQuestionIndex(previousIndex);
 
       // Reset the answer, feedback, and score for the previous question
