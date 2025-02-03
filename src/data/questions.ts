@@ -151,10 +151,82 @@ export const questions: Question[] = [
     correctAnswer: 1,
     explanation: "Azure DNS allows you to host your DNS domains in Azure, providing name resolution using Microsoft’s infrastructure.",
     category: "Routing"
+  },
+  {
+    id: 11,
+    type: QuestionType.MultipleChoice,
+    question: "Your company has a single on-premises datacenter in Washington DC. The East US Azure region has a peering location in Washington DC. The company only has Azure resources in the East US region. You need to implement ExpressRoute to support up to 1 Gbps. You must use only ExpressRoute Unlimited data plans. The solution must minimize costs. Which type of ExpressRoute circuits should you create?",
+    options: [
+      "ExpressRoute Local",
+      "ExpressRoute Direct",
+      "ExpressRoute Premium",
+      "ExpressRoute Standard"
+    ],
+    correctAnswer: 0, // A. ExpressRoute Local
+    explanation: "ExpressRoute Local is the most cost-effective option when you have Azure resources in the same region as the peering location and need to minimize costs.",
+    category: "ExpressRoute"
+  },
+  {
+    id: 12,
+    type: QuestionType.MultipleChoice,
+    question: "You are planning an Azure Point-to-Site (P2S) VPN that will use OpenVPN. Users will authenticate by an on-premises Active Directory domain. Which additional service should you deploy to support the VPN authentication?",
+    options: [
+      "An Azure Key Vault",
+      "A RADIUS server",
+      "A certification authority",
+      "Azure Active Directory (Azure AD) Application Proxy"
+    ],
+    correctAnswer: 1, // B. RADIUS Server
+    explanation: "To authenticate users via Active Directory, a RADIUS server is needed to facilitate the authentication for the OpenVPN connection.",
+    category: "VPN Solutions"
+  },
+  {
+    id: 13,
+    type: QuestionType.MultipleChoice,
+    question: "You plan to configure BGP for a Site-to-Site VPN connection between a datacenter and Azure. Which two Azure resources should you configure? Each correct answer presents a part of the solution.",
+    options: [
+      "A virtual network gateway",
+      "Azure Application Gateway",
+      "Azure Firewall",
+      "A local network gateway",
+      "Azure Front Door"
+    ],
+    correctAnswer: [0, 3], // A. virtual network gateway, D. local network gateway
+    explanation: "You need to configure both a Virtual Network Gateway in Azure and a Local Network Gateway for the on-premises datacenter when implementing BGP for Site-to-Site VPN.",
+    category: "VPN Solutions"
+  },
+  {
+    id: 14,
+    type: QuestionType.MultipleChoice,
+    question: "You fail to establish a Site-to-Site VPN connection between your company's main office and an Azure virtual network. You need to troubleshoot what prevents you from establishing the IPsec tunnel. Which diagnostic log should you review?",
+    options: [
+      "IKEDiagnosticLog",
+      "RouteDiagnosticLog",
+      "GatewayDiagnosticLog",
+      "TunnelDiagnosticLog"
+    ],
+    correctAnswer: 0, // A. IKEDiagnosticLog
+    explanation: "The IKEDiagnosticLog provides insight into the IKE (Internet Key Exchange) phase of the VPN connection, which is crucial for troubleshooting IPsec tunnel issues.",
+    category: "VPN Solutions"
+  },
+  {
+    id: 15,
+    type: QuestionType.MultipleChoice,
+    question: "You have an Azure virtual network and an on-premises datacenter. You are planning a Site-to-Site VPN connection between the datacenter and the virtual network. Which two resources should you include in your plan? Each correct answer presents part of the solution.",
+    options: [
+      "A user-defined route",
+      "A virtual network gateway",
+      "Azure Firewall",
+      "Azure Web Application Firewall (WAF)",
+      "An on-premises data gateway",
+      "An Azure application gateway",
+      "A local network gateway"
+    ],
+    correctAnswer: [1, 6], // B. virtual network gateway, G. local network gateway
+    explanation: "The key resources required for a Site-to-Site VPN connection are the Virtual Network Gateway in Azure and the Local Network Gateway representing the on-premises network.",
+    category: "VPN Solutions"
   }
-  // Additional questions can be added here following the same structure
 ];
-
 export const categories = [
   "Virtual Networks",
   "Load Balancing",

@@ -59,14 +59,10 @@ function App() {
 
       setCurrentQuestionIndex(previousIndex);
 
-      // Restore the previous answer and attempted state
-      setSelectedAnswer(answers[previousIndex] || null);
-      setShowExplanation(attempted[previousIndex]); // Show explanation only if the question was attempted
-
-      // Reset feedback for the previous question
-      setFeedback(
-        attempted[previousIndex] ? (answers[previousIndex] ? 'correct' : 'incorrect') : null
-      );
+      // Reset the answer, feedback, and score for the previous question
+      setSelectedAnswer(null); // Clear the previous selected answer
+      setFeedback(null); // Reset feedback
+      setShowExplanation(false); // Hide the explanation
     }
   };
 
@@ -94,7 +90,7 @@ function App() {
       <Header score={score} questionIndex={currentQuestionIndex + 1} />
 
       <main className="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      {!isCompleted ? (
+        {!isCompleted ? (
           <>
             <ProgressBar current={currentQuestionIndex + 1} total={questions.length} />
             <QuestionLayout
