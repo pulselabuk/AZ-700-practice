@@ -20,6 +20,19 @@ function App() {
   const [answers, setAnswers] = useState<(string[] | null)[]>(questions.map(() => null)); // To track user answers
   const [attempted, setAttempted] = useState<boolean[]>(questions.map(() => false)); // To track attempted questions
 
+  const calculateScore = () => {
+    return answers.reduce((total, answer, index) => {
+      if (answer) {
+        const question = questions[index];
+        const isCorrect = 'correctAnswer' in question
+          ? parseInt(answer[0]) === question.correctAnswer
+          : JSON.stringify(answer.map(Number)) === JSON.stringify(question.correctOrder);
+        return total + (isCorrect ? 1 : 0);
+      }
+      return total;
+    }, 0);
+  };
+
   const handleAnswerSubmit = () => {
     if (!selectedAnswer) return;
 
@@ -42,7 +55,7 @@ function App() {
       return updated;
     });
 
-    setScore((prev) => prev + (isCorrect ? 1 : 0));
+    setScore(calculateScore());
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     setShowExplanation(true);
   };
@@ -55,36 +68,24 @@ function App() {
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
-      const previousIndex = currentQuestionIndex - 1;
-
-      // Check if the previous question was answered correctly
-      const wasCorrect = answers[previousIndex] 
-        ? 'correctAnswer' in questions[previousIndex] 
-          ? parseInt(answers[previousIndex][0]) === questions[previousIndex].correctAnswer 
-          : JSON.stringify(answers[previousIndex].map(Number)) === JSON.stringify(questions[previousIndex].correctOrder)
-        : false;
-
-      // Deduct 1 from the score if the previous answer was correct
-      if (wasCorrect) {
-        setScore(prev => prev - 1);
-      }
-
-      setCurrentQuestionIndex(previousIndex);
-
-      // Reset the answer, feedback, and score for the previous question
-      setSelectedAnswer(null); // Clear the previous selected answer
-      setFeedback(null); // Reset feedback
-      setShowExplanation(false); // Hide the explanation
+      setCurrentQuestionIndex((prev) => prev - 1);
+      setSelectedAnswer(answers[currentQuestionIndex - 1]);
+      setFeedback(null);
+      setShowExplanation(false);
+      setScore(calculateScore());
     }
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex === questions.length - 1) setIsCompleted(true);
-    else {
+    if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
+      setSelectedAnswer(answers[currentQuestionIndex + 1]);
       setFeedback(null);
-      setSelectedAnswer(null);
       setShowExplanation(false);
+      setScore(calculateScore());
+    } else {
+      setIsCompleted(true);
+      setScore(calculateScore());
     }
   };
 
