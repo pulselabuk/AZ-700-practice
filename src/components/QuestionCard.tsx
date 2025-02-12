@@ -22,7 +22,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   }, [question.options]);
 
   const handleMultipleChoiceSelect = (index: number) => {
-    onAnswerSelect([index.toString()]);
+    if (selectedAnswer) {
+      if (selectedAnswer.includes(index.toString())) {
+        onAnswerSelect(selectedAnswer.filter((answer) => answer !== index.toString()));
+      } else {
+        onAnswerSelect([...selectedAnswer, index.toString()]);
+      }
+    } else {
+      onAnswerSelect([index.toString()]);
+    }
   };
 
   const handleDragEnd = (result: any) => {

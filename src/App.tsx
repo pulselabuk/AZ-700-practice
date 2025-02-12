@@ -26,7 +26,7 @@ function App() {
         const question = questions[index];
         const isCorrect = 'correctAnswer' in question
           ? parseInt(answer[0]) === question.correctAnswer
-          : JSON.stringify(answer.map(Number)) === JSON.stringify(question.correctOrder);
+          : JSON.stringify(answer.map(Number).sort()) === JSON.stringify(question.correctOrder.sort());
         return total + (isCorrect ? 1 : 0);
       }
       return total;
@@ -35,14 +35,14 @@ function App() {
 
   const handleAnswerSubmit = () => {
     if (!selectedAnswer) return;
-
+  
     const isCorrect =
       'correctAnswer' in currentQuestion
         ? parseInt(selectedAnswer[0]) === currentQuestion.correctAnswer
-        : JSON.stringify(selectedAnswer.map(Number)) === JSON.stringify(
-            currentQuestion.correctOrder
+        : JSON.stringify(selectedAnswer.map(Number).sort()) === JSON.stringify(
+            currentQuestion.correctOrder.map(Number).sort()
           );
-
+  
     // Save the answer and mark the question as attempted
     setAnswers((prev) => {
       const updated = [...prev];
@@ -54,11 +54,13 @@ function App() {
       updated[currentQuestionIndex] = true;
       return updated;
     });
-
+  
     setScore(calculateScore());
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     setShowExplanation(true);
   };
+  
+  
 
   const handleRetryQuestion = () => {
     setSelectedAnswer(null); // Clear the selected answer
