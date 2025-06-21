@@ -11,7 +11,7 @@ export const Footer = () => (
       {/* Links */}
       <div className="flex space-x-4">
         <a
-          href="https://github.com/tomsclater"
+          href="https://github.com/pulselabuk/AZ-700-practice"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center text-gray-300 hover:text-white"

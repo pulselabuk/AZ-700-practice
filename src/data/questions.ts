@@ -183,15 +183,14 @@ export const questions: Question[] = [
   {
     id: 13,
     type: QuestionType.MultipleChoice,
-    question: "You plan to configure BGP for a Site-to-Site VPN connection between a datacenter and Azure. Which two Azure resources should you configure? Each correct answer presents a part of the solution.",
+    question: "You plan to configure BGP for a Site-to-Site VPN connection between a datacenter and Azure. Which Azure resource should you configure? Only one of the two required components are listed.",
     options: [
-      "A virtual network gateway",
       "Azure Application Gateway",
       "Azure Firewall",
       "A local network gateway",
       "Azure Front Door"
     ],
-    correctAnswer: [0, 3], // A. virtual network gateway, D. local network gateway
+    correctAnswer: [2], // C. local network gateway
     explanation: "You need to configure both a Virtual Network Gateway in Azure and a Local Network Gateway for the on-premises datacenter when implementing BGP for Site-to-Site VPN.",
     category: "VPN Solutions"
   },
@@ -212,7 +211,7 @@ export const questions: Question[] = [
   {
     id: 15,
     type: QuestionType.MultipleChoice,
-    question: "You have an Azure virtual network and an on-premises datacenter. You are planning a Site-to-Site VPN connection between the datacenter and the virtual network. Which two resources should you include in your plan? Each correct answer presents part of the solution.",
+    question: "You have an Azure virtual network and an on-premises datacenter. You are planning a Site-to-Site VPN connection between the datacenter and the virtual network. Which resource should you include in your plan?.",
     options: [
       "A user-defined route",
       "A virtual network gateway",
@@ -220,9 +219,8 @@ export const questions: Question[] = [
       "Azure Web Application Firewall (WAF)",
       "An on-premises data gateway",
       "An Azure application gateway",
-      "A local network gateway"
     ],
-    correctAnswer: [1, 6], // B. virtual network gateway, G. local network gateway
+    correctAnswer: 1, // B. virtual network gateway
     explanation: "The key resources required for a Site-to-Site VPN connection are the Virtual Network Gateway in Azure and the Local Network Gateway representing the on-premises network.",
     category: "VPN Solutions"
   }
